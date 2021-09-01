@@ -38,7 +38,6 @@ func AssembleBot(bot *WeatherBotAdaptors) *gobot.Robot {
 	if bot.MqttAdaptor != nil {
 		adaptors = append(adaptors, bot.MqttAdaptor)
 	}
-	log.Println(adaptors)
 	robot := gobot.NewRobot(BotName,
 		adaptors,
 		[]gobot.Device{bot.Driver},

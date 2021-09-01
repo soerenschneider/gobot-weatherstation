@@ -1,6 +1,7 @@
 package internal
 
 import (
+	"encoding/json"
 	"fmt"
 	"os"
 	"strconv"
@@ -10,22 +11,22 @@ import (
 const BotName = "weatherbot"
 
 type Config struct {
-	Location        string
-	IntervalSeconds int
-	MetricConfig    string
+	Location        string `json:"location"`
+	IntervalSeconds int    `json:"read_interval"`
+	MetricConfig    string `json:"metrics_addr"`
 	MqttConfig
 	I2cConfig
 }
 
 type I2cConfig struct {
-	Bus     int
-	Address int
+	Bus     int `json:"i2c_bus"`
+	Address int `json:"i2c_address"`
 }
 
 type MqttConfig struct {
-	Host     string
-	ClientId string
-	Topic    string
+	Host     string `json:"mqtt_host"`
+	ClientId string `json:"mqtt_client_id"`
+	Topic    string `json:"mqtt_topic"`
 }
 
 func DefaultConfig() Config {
@@ -44,6 +45,17 @@ func DefaultConfig() Config {
 		},
 		MetricConfig: fromEnv(fmt.Sprintf("%s_METRICS_ADDR", strings.ToUpper(BotName)), ":9400"),
 	}
+}
+
+func ReadJsonConfig(filePath string) (*Config, error) {
+	fileContent, err := os.ReadFile(filePath)
+	if err != nil {
+		return nil, fmt.Errorf("could not read config from file: %v", err)
+	}
+
+	ret := &Config{}
+	err = json.Unmarshal(fileContent, ret)
+	return ret, err
 }
 
 func (c *Config) Validate() error {

@@ -4,11 +4,15 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"regexp"
 	"strconv"
 	"strings"
 )
 
 const BotName = "weatherbot"
+
+// This regex is not a very strict check, we don't validate hostname or ip (v4, v6) addresses...
+var mqttHostRegex = regexp.MustCompile(`\w{3,}://.{3,}:\d{2,4}`)
 
 type Config struct {
 	Location        string `json:"location"`
@@ -76,6 +80,13 @@ func (c *Config) Validate() error {
 		return fmt.Errorf("invalid mqtt topic provided")
 	}
 
+	return matchHost(c.MqttConfig.Host)
+}
+
+func matchHost(host string) error {
+	if !mqttHostRegex.Match([]byte(host)) {
+		return fmt.Errorf("invalid host format used")
+	}
 	return nil
 }
 

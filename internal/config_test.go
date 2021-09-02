@@ -54,3 +54,39 @@ func TestReadJsonConfig(t *testing.T) {
 		})
 	}
 }
+
+func Test_matchHost(t *testing.T) {
+	tests := []struct {
+		name    string
+		host    string
+		wantErr bool
+	}{
+		{
+			name: "valid host",
+			host: "tcp://myhost:1883",
+			wantErr: false,
+		},
+		{
+			name: "valid ip",
+			host: "tcp://192.168.1.1:1883",
+			wantErr: false,
+		},
+		{
+			name: "missing protocol",
+			host: "192.168.1.1:1883",
+			wantErr: true,
+		},
+		{
+			name: "missing port",
+			host: "tcp://192.168.1.1",
+			wantErr: true,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if err := matchHost(tt.host); (err != nil) != tt.wantErr {
+				t.Errorf("matchHost() error = %v, wantErr %v", err, tt.wantErr)
+			}
+		})
+	}
+}

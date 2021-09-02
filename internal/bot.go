@@ -2,7 +2,6 @@ package internal
 
 import (
 	"gobot.io/x/gobot"
-	"log"
 	"time"
 )
 

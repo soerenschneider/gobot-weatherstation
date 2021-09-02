@@ -48,7 +48,7 @@ func AssembleBot(bot *WeatherBotAdaptors) *gobot.Robot {
 
 func (station *WeatherBotAdaptors) readAndPublishMeasurement() {
 	measurement := station.readMeasurement()
-	metricFromMeasurement(*measurement, station.Config.Location)
+	metricFromMeasurement(measurement, station.Config.Location)
 
 	if station.MqttAdaptor != nil {
 		msg, _ := measurement.AsJson()
@@ -62,7 +62,7 @@ func (station *WeatherBotAdaptors) readAndPublishMeasurement() {
 	}
 }
 
-func (station *WeatherBotAdaptors) readMeasurement() *Measurement {
+func (station *WeatherBotAdaptors) readMeasurement() Measurement {
 	measurement := NewMeasurement()
 	measurement.AddAltitude(station.Driver.Altitude())
 	measurement.AddHumidity(station.Driver.Humidity())

@@ -15,8 +15,8 @@ type Measurement struct {
 	Errors      []string `json:"errors,omitempty"`
 }
 
-func NewMeasurement() *Measurement {
-	return &Measurement{
+func NewMeasurement() Measurement {
+	return Measurement{
 		Altitude:    -1,
 		Humidity:    -1,
 		Pressure:    -1,

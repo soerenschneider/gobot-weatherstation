@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://www.github.com/soerenschneider/gobot-weatherstation/compare/v1.1.0...v1.2.0) (2021-09-02)
+
+
+### Features
+
+* Add flag to chose config file ([3d7447b](https://www.github.com/soerenschneider/gobot-weatherstation/commit/3d7447b215af0d8dea20a02a592ef92cd78c908b))
+
 ## [1.1.0](https://www.github.com/soerenschneider/gobot-weatherstation/compare/v1.0.0...v1.1.0) (2021-09-02)
 
 

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"gobot-weatherstation/internal"
 	"gobot.io/x/gobot/drivers/i2c"
 	"gobot.io/x/gobot/platforms/mqtt"
@@ -9,7 +10,8 @@ import (
 )
 
 func main() {
-	conf := internal.DefaultConfig()
+	conf := getConfig()
+	log.Println("Validating config...")
 	err := conf.Validate()
 	if err != nil {
 		log.Fatalf("Could not validate config: %v", err)
@@ -19,6 +21,7 @@ func main() {
 		go internal.StartMetricsServer(conf.MetricConfig)
 	}
 
+	log.Println("Building adaptors and drivers")
 	raspberry := raspi.NewAdaptor()
 	driver := i2c.NewBME280Driver(raspberry, i2c.WithBus(conf.I2cConfig.Bus), i2c.WithAddress(conf.I2cConfig.Address))
 
@@ -41,4 +44,24 @@ func main() {
 	if err != nil {
 		log.Fatalf("Could not start bot: %v", err)
 	}
+}
+
+func getConfig() internal.Config {
+	var configFile string
+	flag.StringVar(&configFile, "config", "", "File to read configuration from")
+	flag.Parse()
+	if configFile == "" {
+		log.Println("Building config from env vars")
+		return internal.DefaultConfig()
+	}
+
+	log.Printf("Reading config from file %s", configFile)
+	conf, err := internal.ReadJsonConfig(configFile)
+	if err != nil {
+		log.Fatalf("Could not read config from %s: %v", configFile, err)
+	}
+	if nil == conf {
+		log.Fatalf("Received empty config, should not happen")
+	}
+	return *conf
 }

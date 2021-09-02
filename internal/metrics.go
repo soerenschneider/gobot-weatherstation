@@ -13,9 +13,9 @@ const namespace = BotName
 var (
 	metricSensorErrors = promauto.NewCounterVec(prometheus.CounterOpts{
 		Namespace: namespace,
-		Name:      "sensor_errors_total",
+		Name:      "reading_errors_total",
 		Subsystem: "sensor",
-		Help:      "The amount of errors while trying to read the sensor",
+		Help:      "Total amount of errors while reading from the sensor",
 	}, []string{"location"})
 
 	metricAltitude = promauto.NewGaugeVec(prometheus.GaugeOpts{
@@ -57,7 +57,7 @@ var (
 		Namespace: namespace,
 		Name:      "message_publish_errors",
 		Subsystem: "mqtt",
-		Help:      "The amount of errors occurred while trying to publish messages over MQTT",
+		Help:      "Total amount of errors while trying to publish messages over MQTT",
 	}, []string{"location"})
 )
 

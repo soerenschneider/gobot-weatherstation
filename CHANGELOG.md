@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.3.0](https://www.github.com/soerenschneider/gobot-weatherstation/compare/v1.2.0...v1.3.0) (2021-09-09)
+
+
+### Features
+
+* Print config values ([dcfe1b4](https://www.github.com/soerenschneider/gobot-weatherstation/commit/dcfe1b49235a5bf0a1db02a7e38d58dc5833e246))
+
+
+### Bug Fixes
+
+* Fix int parsing ([af2fe99](https://www.github.com/soerenschneider/gobot-weatherstation/commit/af2fe991965ddc4df8121a1f8c1f56a8bc1e4b0b))
+
 ## [1.2.0](https://www.github.com/soerenschneider/gobot-weatherstation/compare/v1.1.0...v1.2.0) (2021-09-02)
 
 

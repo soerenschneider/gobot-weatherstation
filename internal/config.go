@@ -104,7 +104,7 @@ func fromEnvInt(name string, def int) int {
 		return def
 	}
 
-	parsed, err := strconv.Atoi(name)
+	parsed, err := strconv.Atoi(val)
 	if err != nil {
 		return def
 	}

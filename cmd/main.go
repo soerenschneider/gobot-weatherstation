@@ -13,6 +13,7 @@ func main() {
 	conf := getConfig()
 	log.Println("Validating config...")
 	err := conf.Validate()
+	conf.Print()
 	if err != nil {
 		log.Fatalf("Could not validate config: %v", err)
 	}

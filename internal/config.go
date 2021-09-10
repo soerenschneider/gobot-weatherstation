@@ -3,6 +3,7 @@ package internal
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"os"
 	"regexp"
 	"strconv"
@@ -57,9 +58,9 @@ func ReadJsonConfig(filePath string) (*Config, error) {
 		return nil, fmt.Errorf("could not read config from file: %v", err)
 	}
 
-	ret := &Config{}
-	err = json.Unmarshal(fileContent, ret)
-	return ret, err
+	ret := DefaultConfig()
+	err = json.Unmarshal(fileContent, &ret)
+	return &ret, err
 }
 
 func (c *Config) Validate() error {
@@ -83,6 +84,15 @@ func (c *Config) Validate() error {
 	return matchHost(c.MqttConfig.Host)
 }
 
+func (c *Config) Print() {
+	log.Printf("Location=%v", c.Location)
+	log.Printf("Bus=%v", c.Bus)
+	log.Printf("Address=%v", c.Address)
+	log.Printf("ClientId=%v", c.ClientId)
+	log.Printf("Host=%v", c.Host)
+	log.Printf("Topic=%v", c.Topic)
+}
+
 func matchHost(host string) error {
 	if !mqttHostRegex.Match([]byte(host)) {
 		return fmt.Errorf("invalid host format used")
@@ -104,7 +114,7 @@ func fromEnvInt(name string, def int) int {
 		return def
 	}
 
-	parsed, err := strconv.Atoi(name)
+	parsed, err := strconv.Atoi(val)
 	if err != nil {
 		return def
 	}

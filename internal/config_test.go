@@ -62,23 +62,23 @@ func Test_matchHost(t *testing.T) {
 		wantErr bool
 	}{
 		{
-			name: "valid host",
-			host: "tcp://myhost:1883",
+			name:    "valid host",
+			host:    "tcp://myhost:1883",
 			wantErr: false,
 		},
 		{
-			name: "valid ip",
-			host: "tcp://192.168.1.1:1883",
+			name:    "valid ip",
+			host:    "tcp://192.168.1.1:1883",
 			wantErr: false,
 		},
 		{
-			name: "missing protocol",
-			host: "192.168.1.1:1883",
+			name:    "missing protocol",
+			host:    "192.168.1.1:1883",
 			wantErr: true,
 		},
 		{
-			name: "missing port",
-			host: "tcp://192.168.1.1",
+			name:    "missing port",
+			host:    "tcp://192.168.1.1",
 			wantErr: true,
 		},
 	}

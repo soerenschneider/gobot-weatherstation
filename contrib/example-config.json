@@ -1,0 +1,10 @@
+{
+  "location": "location",
+  "read_interval": 60,
+  "metrics_addr": ":1234",
+  "i2c_bus": 15,
+  "i2c_address": 16,
+  "mqtt_host": "tcp://broker:1883",
+  "mqtt_client_id": "client-id",
+  "mqtt_topic": "mytopic/foo"
+}

@@ -1,6 +1,7 @@
 package internal
 
 import (
+	"gobot-bme280/internal/config"
 	"gobot.io/x/gobot"
 	"time"
 )
@@ -22,13 +23,13 @@ type WeatherBotAdaptors struct {
 	Adaptor     gobot.Connection
 	Driver      WeatherBotSensor
 	MqttAdaptor WeatherBotMqttAdaptor
-	Config      Config
+	Config      config.Config
 }
 
 func AssembleBot(bot *WeatherBotAdaptors) *gobot.Robot {
 	work := func() {
 		bot.readAndPublishMeasurement()
-		gobot.Every(time.Duration(bot.Config.IntervalSeconds)*time.Second, func() {
+		gobot.Every(time.Duration(bot.Config.IntervalSecs)*time.Second, func() {
 			bot.readAndPublishMeasurement()
 		})
 	}
@@ -37,7 +38,7 @@ func AssembleBot(bot *WeatherBotAdaptors) *gobot.Robot {
 	if bot.MqttAdaptor != nil {
 		adaptors = append(adaptors, bot.MqttAdaptor)
 	}
-	robot := gobot.NewRobot(BotName,
+	robot := gobot.NewRobot(config.BotName,
 		adaptors,
 		[]gobot.Device{bot.Driver},
 		work,

@@ -2,6 +2,7 @@ package internal
 
 import (
 	"encoding/json"
+	"gobot-bme280/internal/config"
 	"gobot.io/x/gobot"
 	"log"
 	"testing"
@@ -16,7 +17,7 @@ const (
 )
 
 func TestAssembleBot(t *testing.T) {
-	conf := DefaultConfig()
+	conf := config.DefaultConfig()
 	mqttAdaptor := &FakeMqttAdapter{}
 	fakeAdaptor := &FakeMqttAdapter{} // this adaptor isn't really being used by our fake adaptors
 	station := &WeatherBotAdaptors{

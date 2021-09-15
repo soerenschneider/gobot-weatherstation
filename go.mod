@@ -1,4 +1,4 @@
-module gobot-weatherstation
+module gobot-bme280
 
 go 1.16
 

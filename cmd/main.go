@@ -2,7 +2,9 @@ package main
 
 import (
 	"flag"
-	"gobot-weatherstation/internal"
+	"fmt"
+	"gobot-bme280/internal"
+	"gobot-bme280/internal/config"
 	"gobot.io/x/gobot/drivers/i2c"
 	"gobot.io/x/gobot/platforms/mqtt"
 	"gobot.io/x/gobot/platforms/raspi"
@@ -10,6 +12,7 @@ import (
 )
 
 func main() {
+	log.Printf("Started %s, version %s, commit %s, built at %s", config.BotName, internal.BuildVersion, internal.CommitHash, internal.BuildTime)
 	conf := getConfig()
 	log.Println("Validating config...")
 	err := conf.Validate()
@@ -24,11 +27,12 @@ func main() {
 
 	log.Println("Building adaptors and drivers")
 	raspberry := raspi.NewAdaptor()
-	driver := i2c.NewBME280Driver(raspberry, i2c.WithBus(conf.I2cConfig.Bus), i2c.WithAddress(conf.I2cConfig.Address))
+	driver := i2c.NewBME280Driver(raspberry, i2c.WithBus(conf.GpioBus), i2c.WithAddress(conf.GpioAddress))
 
 	var mqttAdaptor internal.WeatherBotMqttAdaptor
 	if conf.Host != "" {
-		mqttAdaptor = mqtt.NewAdaptor(conf.MqttConfig.Host, conf.MqttConfig.ClientId)
+		clientId := fmt.Sprintf("%s_%s", config.BotName, conf.Location)
+		mqttAdaptor = mqtt.NewAdaptor(conf.MqttConfig.Host, clientId)
 	} else {
 		log.Println("No MQTT host defined, not connecting to MQTT broker")
 	}
@@ -47,17 +51,17 @@ func main() {
 	}
 }
 
-func getConfig() internal.Config {
+func getConfig() config.Config {
 	var configFile string
 	flag.StringVar(&configFile, "config", "", "File to read configuration from")
 	flag.Parse()
 	if configFile == "" {
 		log.Println("Building config from env vars")
-		return internal.DefaultConfig()
+		return config.DefaultConfig()
 	}
 
 	log.Printf("Reading config from file %s", configFile)
-	conf, err := internal.ReadJsonConfig(configFile)
+	conf, err := config.ReadJsonConfig(configFile)
 	if err != nil {
 		log.Fatalf("Could not read config from %s: %v", configFile, err)
 	}

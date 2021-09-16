@@ -6,8 +6,8 @@ import (
 )
 
 const (
-	defaultGpioBus              = 1
-	defaultGpioAddress          = 0x76
+	defaultGpioBus     = 1
+	defaultGpioAddress = 0x76
 )
 
 func defaultSensorConfig() SensorConfig {
@@ -18,8 +18,8 @@ func defaultSensorConfig() SensorConfig {
 }
 
 type SensorConfig struct {
-	GpioBus     int 	`json:"gpio_bus,omitempty"`
-	GpioAddress int    `json:"gpio_address,omitempty"`
+	GpioBus     int `json:"gpio_bus,omitempty"`
+	GpioAddress int `json:"gpio_address,omitempty"`
 }
 
 func (conf *SensorConfig) Validate() error {

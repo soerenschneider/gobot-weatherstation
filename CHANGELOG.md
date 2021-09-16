@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.3.1](https://www.github.com/soerenschneider/gobot-bme280/compare/v1.3.0...v1.3.1) (2021-09-16)
+
+
+### Bug Fixes
+
+* Build conf from env instead of default values conf ([92a3772](https://www.github.com/soerenschneider/gobot-bme280/commit/92a37720c030bdaf995526fd2d9710da99d95f2b))
+
 ## [1.3.0](https://www.github.com/soerenschneider/gobot-weatherstation/compare/v1.2.0...v1.3.0) (2021-09-09)
 
 

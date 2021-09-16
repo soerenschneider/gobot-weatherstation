@@ -15,7 +15,7 @@ const (
 	BotName = "gobot_bme280"
 	defaultLogValues       = false
 	defaultIntervalSeconds = 30
-	defaultMetricConfig    = ":9191"
+	defaultMetricConfig    = ":9192"
 )
 
 var (

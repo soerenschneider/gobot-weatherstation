@@ -233,7 +233,7 @@ func TestConfig_Validate(t *testing.T) {
 					GpioAddress: tt.fields.GpioAddress,
 				},
 				IntervalSecs: tt.fields.IntervalSecs,
-				LogValues:    tt.fields.LogValues,
+				LogSensor:    tt.fields.LogValues,
 				MqttConfig:   tt.fields.MqttConfig,
 			}
 			if err := c.Validate(); (err != nil) != tt.wantErr {
@@ -267,7 +267,7 @@ func TestReadJsonConfig(t *testing.T) {
 					GpioAddress: defaultGpioAddress,
 				},
 				IntervalSecs: defaultIntervalSeconds,
-				LogValues:    defaultLogValues,
+				LogSensor:    defaultLogSensor,
 				MqttConfig: MqttConfig{
 					Host:  "tcp://broker:1883",
 					Topic: "mytopic/foo",

@@ -27,10 +27,12 @@ type WeatherBotAdaptors struct {
 }
 
 func AssembleBot(bot *WeatherBotAdaptors) *gobot.Robot {
+	versionInfo.WithLabelValues(BuildVersion, CommitHash).Set(1)
 	work := func() {
 		bot.readAndPublishMeasurement()
 		gobot.Every(time.Duration(bot.Config.IntervalSecs)*time.Second, func() {
 			bot.readAndPublishMeasurement()
+			metricsHeartbeat.WithLabelValues(bot.Config.Location).SetToCurrentTime()
 		})
 	}
 

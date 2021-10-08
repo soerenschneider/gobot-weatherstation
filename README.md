@@ -9,28 +9,28 @@ This project uses the [Gobot Framework](https://gobot.io/) in combination with a
 
 # Configuration
 ## Via Env Variables
-| ENV                       | Default              | Description                                    |
-|---------------------------|----------------------|------------------------------------------------|
-| WEATHERBOT_LOCATION       | -                    | Location short name of this weatherstation bot |
-| WEATHERBOT_I2C_BUS        | 1                    | I2C Bus to use                                 |
-| WEATHERBOT_I2C_ADDRESS    | 0x76                 | I2C Address to use                             |
-| WEATHERBOT_MQTT_HOST      | -                    | Host of the MQTT broker, can be omitted        |
-| WEATHERBOT_MQTT_CLIENT_ID | weatherbot-$LOCATION | Client ID for the MQTT connection              |
-| WEATHERBOT_MQTT_TOPIC     | weatherbot/$LOCATION | Topic to publish messages into                 |
-| WEATHERBOT_METRICS_ADDR   | :9400                | Prometheus http handler listen address         |
+| ENV                         | Default              | Description                                    |
+|-----------------------------|----------------------|------------------------------------------------|
+| GOBOT_BME280_LOCATION       | -                    | Location short name of this bot                |
+| GOBOT_BME280_GPIO_BUS       | 1                    | GPIO Bus to use                                |
+| GOBOT_BME280_GPIO_ADDRESS   | 0x76                 | GPIO Address to use                            |
+| GOBOT_BME280_MQTT_HOST      | -                    | Host of the MQTT broker, can be omitted        |
+| GOBOT_BME280_MQTT_TOPIC     |                      | Topic to publish messages into                 |
+| GOBOT_BME280_LOG_SENSOR     | false                | Log sensor readings                            |
+| GOBOT_BME280_METRICS_ADDR   | :9400                | Prometheus http handler listen address         |
 
 ## Via Config File
 
 ```json
 {
   "location": "location",
-  "read_interval": 60,
+  "interval_s": 60,
   "metrics_addr": ":1234",
-  "i2c_bus": 15,
-  "i2c_address": 16,
+  "gpio_bus": 15,
+  "gpio_address": 16,
   "mqtt_host": "tcp://broker:1883",
-  "mqtt_client_id": "client-id",
-  "mqtt_topic": "mytopic/foo"
+  "mqtt_topic": "mytopic/%s",
+  "log_sensor": true
 }
 ```
 
@@ -40,10 +40,10 @@ This project exposes the following metrics in Open Metrics format.
 
 | Namespace  | Subsystem | Name                     | Type    | Labels   | Help                                                              |
 |------------|-----------|--------------------------|---------|----------|-------------------------------------------------------------------|
-| weatherbot | sensor    | reading_errors_total     | counter | location | Total amount of errors while reading from the sensor              |
-| weatherbot | sensor    | altitude_meters          | gauge   | location | The measured altitude in meters                                   |
-| weatherbot | sensor    | humidity_percent         | gauge   | location | The measured humidity in percent                                  |
-| weatherbot | sensor    | temperature_celsius      | gauge   | location | The measured temperature in degrees celsius                       |
-| weatherbot | sensor    | pressure_pa              | gauge   | location | The measured pressure in pascal                                   |
-| weatherbot | mqtt      | messages_published_total | counter | location | The amount of published MQTT messages                             |
-| weatherbot | mqtt      | message_publish_errors   | counter | location | Total amount of errors while trying to publish messages over MQTT |
+| gobot_bme280 | sensor    | reading_errors_total     | counter | location | Total amount of errors while reading from the sensor              |
+| gobot_bme280 | sensor    | altitude_meters          | gauge   | location | The measured altitude in meters                                   |
+| gobot_bme280 | sensor    | humidity_percent         | gauge   | location | The measured humidity in percent                                  |
+| gobot_bme280 | sensor    | temperature_celsius      | gauge   | location | The measured temperature in degrees celsius                       |
+| gobot_bme280 | sensor    | pressure_pa              | gauge   | location | The measured pressure in pascal                                   |
+| gobot_bme280 | mqtt      | messages_published_total | counter | location | The amount of published MQTT messages                             |
+| gobot_bme280 | mqtt      | message_publish_errors   | counter | location | Total amount of errors while trying to publish messages over MQTT |

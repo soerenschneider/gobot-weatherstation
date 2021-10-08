@@ -56,7 +56,7 @@ var (
 
 	metricsMessagePublishErrors = promauto.NewCounterVec(prometheus.CounterOpts{
 		Namespace: namespace,
-		Name:      "message_publish_errors",
+		Name:      "message_publish_errors_total",
 		Subsystem: "mqtt",
 		Help:      "Total amount of errors while trying to publish messages over MQTT",
 	}, []string{"location"})

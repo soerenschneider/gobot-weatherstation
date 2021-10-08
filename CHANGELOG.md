@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.4.0](https://www.github.com/soerenschneider/gobot-bme280/compare/v1.3.1...v1.4.0) (2021-10-08)
+
+
+### Features
+
+* Add heartbeat and version metric ([fb85c8f](https://www.github.com/soerenschneider/gobot-bme280/commit/fb85c8f2419c3743e89b329591ed9446fb4fbd4c))
+* Allow reproducible builds ([ed6a14f](https://www.github.com/soerenschneider/gobot-bme280/commit/ed6a14f39588c8897b7df7b5fe037dc51a133f63))
+
 ### [1.3.1](https://www.github.com/soerenschneider/gobot-bme280/compare/v1.3.0...v1.3.1) (2021-09-16)
 
 

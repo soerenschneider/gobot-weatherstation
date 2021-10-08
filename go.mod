@@ -1,4 +1,4 @@
-module gobot-bme280
+module github.com/soerenschneider/gobot-bme280
 
 go 1.16
 

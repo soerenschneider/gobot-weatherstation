@@ -1,7 +1,7 @@
 package internal
 
 import (
-	"gobot-bme280/internal/config"
+	"github.com/soerenschneider/gobot-bme280/internal/config"
 	"gobot.io/x/gobot"
 	"time"
 )

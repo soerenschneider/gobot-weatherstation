@@ -13,7 +13,7 @@ import (
 )
 
 const (
-	cliConfFile = "conf"
+	cliConfFile = "config"
 	cliVersion  = "version"
 )
 

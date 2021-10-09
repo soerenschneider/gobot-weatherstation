@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.5.1](https://www.github.com/soerenschneider/gobot-bme280/compare/v1.5.0...v1.5.1) (2021-10-09)
+
+
+### Bug Fixes
+
+* revert flag name ([8989ac5](https://www.github.com/soerenschneider/gobot-bme280/commit/8989ac5b010386c1523aca89c29fc035dd79a5cd))
+
 ## [1.5.0](https://www.github.com/soerenschneider/gobot-bme280/compare/v1.4.0...v1.5.0) (2021-10-09)
 
 

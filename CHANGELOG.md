@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.0](https://www.github.com/soerenschneider/gobot-bme280/compare/v1.4.0...v1.5.0) (2021-10-09)
+
+
+### Features
+
+* Flag to print version and quit ([e812fed](https://www.github.com/soerenschneider/gobot-bme280/commit/e812feddca66164935948dc175299a29fdef3ac7))
+
 ## [1.4.0](https://www.github.com/soerenschneider/gobot-bme280/compare/v1.3.1...v1.4.0) (2021-10-08)
 
 

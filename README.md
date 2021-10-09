@@ -38,12 +38,12 @@ This project uses the [Gobot Framework](https://gobot.io/) in combination with a
 
 This project exposes the following metrics in Open Metrics format.
 
-| Namespace  | Subsystem | Name                     | Type    | Labels   | Help                                                              |
-|------------|-----------|--------------------------|---------|----------|-------------------------------------------------------------------|
-| gobot_bme280 | sensor    | reading_errors_total     | counter | location | Total amount of errors while reading from the sensor              |
-| gobot_bme280 | sensor    | altitude_meters          | gauge   | location | The measured altitude in meters                                   |
-| gobot_bme280 | sensor    | humidity_percent         | gauge   | location | The measured humidity in percent                                  |
-| gobot_bme280 | sensor    | temperature_celsius      | gauge   | location | The measured temperature in degrees celsius                       |
-| gobot_bme280 | sensor    | pressure_pa              | gauge   | location | The measured pressure in pascal                                   |
-| gobot_bme280 | mqtt      | messages_published_total | counter | location | The amount of published MQTT messages                             |
-| gobot_bme280 | mqtt      | message_publish_errors   | counter | location | Total amount of errors while trying to publish messages over MQTT |
+| Namespace    | Subsystem | Name                           | Type    | Labels   | Help                                                              |
+|--------------|-----------|--------------------------------|---------|----------|-------------------------------------------------------------------|
+| gobot_bme280 | sensor    | reading_errors_total           | counter | location | Total amount of errors while reading from the sensor              |
+| gobot_bme280 | sensor    | altitude_meters                | gauge   | location | The measured altitude in meters                                   |
+| gobot_bme280 | sensor    | humidity_percent               | gauge   | location | The measured humidity in percent                                  |
+| gobot_bme280 | sensor    | temperature_celsius            | gauge   | location | The measured temperature in degrees celsius                       |
+| gobot_bme280 | sensor    | pressure_pa                    | gauge   | location | The measured pressure in pascal                                   |
+| gobot_bme280 | mqtt      | messages_published_total       | counter | location | The amount of published MQTT messages                             |
+| gobot_bme280 | mqtt      | message_publish_errors_total   | counter | location | Total amount of errors while trying to publish messages over MQTT |

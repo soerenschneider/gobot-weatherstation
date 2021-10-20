@@ -53,7 +53,11 @@ func run(conf config.Config) {
 	var mqttAdaptor internal.WeatherBotMqttAdaptor
 	if conf.Host != "" {
 		clientId := fmt.Sprintf("%s_%s", config.BotName, conf.Location)
-		mqttAdaptor = mqtt.NewAdaptor(conf.MqttConfig.Host, clientId)
+		mq := mqtt.NewAdaptor(conf.MqttConfig.Host, clientId)
+		mq.SetAutoReconnect(true)
+		mq.SetQoS(1)
+
+		mqttAdaptor = mq
 	} else {
 		log.Println("No MQTT host defined, not connecting to MQTT broker")
 	}

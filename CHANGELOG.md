@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.5.2](https://www.github.com/soerenschneider/gobot-bme280/compare/v1.5.1...v1.5.2) (2021-10-20)
+
+
+### Bug Fixes
+
+* Enable auto-reconnect to mqtt broker ([72cf2ef](https://www.github.com/soerenschneider/gobot-bme280/commit/72cf2ef78125ca04479daf33bb3f1ac39b6b0b6e))
+
 ### [1.5.1](https://www.github.com/soerenschneider/gobot-bme280/compare/v1.5.0...v1.5.1) (2021-10-09)
 
 

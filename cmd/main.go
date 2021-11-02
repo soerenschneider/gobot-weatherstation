@@ -52,7 +52,7 @@ func run(conf config.Config) {
 
 	var mqttAdaptor internal.WeatherBotMqttAdaptor
 	if conf.Host != "" {
-		clientId := fmt.Sprintf("%s_%s", config.BotName, conf.Location)
+		clientId := fmt.Sprintf("%s_%s", config.BotName, conf.Placement)
 		mq := mqtt.NewAdaptor(conf.MqttConfig.Host, clientId)
 		mq.SetAutoReconnect(true)
 		mq.SetQoS(1)

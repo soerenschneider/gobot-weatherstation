@@ -22,65 +22,65 @@ var (
 		Namespace: namespace,
 		Name:      "heartbeat_timestamp_seconds",
 		Help:      "Heartbeat of this robot",
-	}, []string{"location"})
+	}, []string{"placement"})
 
 	metricSensorErrors = promauto.NewCounterVec(prometheus.CounterOpts{
 		Namespace: namespace,
 		Name:      "reading_errors_total",
 		Subsystem: "sensor",
 		Help:      "Total amount of errors while reading from the sensor",
-	}, []string{"location"})
+	}, []string{"placement"})
 
 	metricAltitude = promauto.NewGaugeVec(prometheus.GaugeOpts{
 		Namespace: namespace,
 		Name:      "altitude_meters",
 		Subsystem: "sensor",
 		Help:      "The measured altitude in meters",
-	}, []string{"location"})
+	}, []string{"placement"})
 
 	metricHumidity = promauto.NewGaugeVec(prometheus.GaugeOpts{
 		Namespace: namespace,
 		Name:      "humidity_percent",
 		Subsystem: "sensor",
 		Help:      "The measured humidity in percent",
-	}, []string{"location"})
+	}, []string{"placement"})
 
 	metricTemperature = promauto.NewGaugeVec(prometheus.GaugeOpts{
 		Namespace: namespace,
 		Name:      "temperature_celsius",
 		Subsystem: "sensor",
 		Help:      "The measured temperature in degrees celsius",
-	}, []string{"location"})
+	}, []string{"placement"})
 
 	metricPressure = promauto.NewGaugeVec(prometheus.GaugeOpts{
 		Namespace: namespace,
 		Name:      "pressure_pa",
 		Subsystem: "sensor",
 		Help:      "The measured pressure in pascal",
-	}, []string{"location"})
+	}, []string{"placement"})
 
 	metricsMessagesPublished = promauto.NewCounterVec(prometheus.CounterOpts{
 		Namespace: namespace,
 		Name:      "messages_published_total",
 		Subsystem: "mqtt",
 		Help:      "The amount of published MQTT messages",
-	}, []string{"location"})
+	}, []string{"placement"})
 
 	metricsMessagePublishErrors = promauto.NewCounterVec(prometheus.CounterOpts{
 		Namespace: namespace,
 		Name:      "message_publish_errors_total",
 		Subsystem: "mqtt",
 		Help:      "Total amount of errors while trying to publish messages over MQTT",
-	}, []string{"location"})
+	}, []string{"placement"})
 )
 
-func metricFromMeasurement(m Measurement, location string) {
-	metricAltitude.WithLabelValues(location).Set(float64(m.Altitude))
-	metricHumidity.WithLabelValues(location).Set(float64(m.Humidity))
-	metricPressure.WithLabelValues(location).Set(float64(m.Pressure))
-	metricTemperature.WithLabelValues(location).Set(float64(m.Temperature))
+func metricFromMeasurement(m Measurement, placement string) {
+	metricAltitude.WithLabelValues(placement).Set(float64(m.Altitude))
+	metricHumidity.WithLabelValues(placement).Set(float64(m.Humidity))
+	metricPressure.WithLabelValues(placement).Set(float64(m.Pressure))
+	metricTemperature.WithLabelValues(placement).Set(float64(m.Temperature))
 	if nil != m.Errors && len(m.Errors) > 0 {
-		metricSensorErrors.WithLabelValues(location).Inc()
+		metricSensorErrors.WithLabelValues(placement).Inc()
 	}
 }
 

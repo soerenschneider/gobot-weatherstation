@@ -1,5 +1,5 @@
 {
-  "location": "location",
+  "placement": "location",
   "read_interval": 60,
   "metrics_addr": ":1234",
   "i2c_bus": 15,

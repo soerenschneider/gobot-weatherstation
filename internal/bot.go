@@ -32,7 +32,7 @@ func AssembleBot(bot *WeatherBotAdaptors) *gobot.Robot {
 		bot.readAndPublishMeasurement()
 		gobot.Every(time.Duration(bot.Config.IntervalSecs)*time.Second, func() {
 			bot.readAndPublishMeasurement()
-			metricsHeartbeat.WithLabelValues(bot.Config.Location).SetToCurrentTime()
+			metricsHeartbeat.WithLabelValues(bot.Config.Placement).SetToCurrentTime()
 		})
 	}
 
@@ -51,16 +51,16 @@ func AssembleBot(bot *WeatherBotAdaptors) *gobot.Robot {
 
 func (station *WeatherBotAdaptors) readAndPublishMeasurement() {
 	measurement := station.readMeasurement()
-	metricFromMeasurement(measurement, station.Config.Location)
+	metricFromMeasurement(measurement, station.Config.Placement)
 
 	if station.MqttAdaptor != nil {
 		msg, _ := measurement.AsJson()
 		success := station.MqttAdaptor.Publish(station.Config.MqttConfig.Topic, msg)
 
 		if success {
-			metricsMessagesPublished.WithLabelValues(station.Config.Location).Inc()
+			metricsMessagesPublished.WithLabelValues(station.Config.Placement).Inc()
 		} else {
-			metricsMessagePublishErrors.WithLabelValues(station.Config.Location).Inc()
+			metricsMessagePublishErrors.WithLabelValues(station.Config.Placement).Inc()
 		}
 	}
 }

@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.5.3](https://www.github.com/soerenschneider/gobot-bme280/compare/v1.5.2...v1.5.3) (2021-11-02)
+
+
+### Miscellaneous Chores
+
+* Trigger release ([f6ef6c6](https://www.github.com/soerenschneider/gobot-bme280/commit/f6ef6c61e71bfa69078953b43a619b03fe96994f))
+
 ### [1.5.2](https://www.github.com/soerenschneider/gobot-bme280/compare/v1.5.1...v1.5.2) (2021-10-20)
 
 

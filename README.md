@@ -1,4 +1,4 @@
-[![Go Report Card](https://goreportcard.com/badge/github.com/soerenschneider/gobot-weatherstation)](https://goreportcard.com/report/github.com/soerenschneider/gobot-weatherstation)
+[![Go Report Card](https://goreportcard.com/badge/github.com/soerenschneider/gobot-bme280)](https://goreportcard.com/report/github.com/soerenschneider/gobot-bme280)
 
 This project uses the [Gobot Framework](https://gobot.io/) in combination with a [BME280 sensor](https://gobot.io/documentation/drivers/bme280/) to work as a configurable weatherstation, being able to send JSON encoded payloads via MQTT and exposing machine readable metrics in the Open Metrics Format.
 

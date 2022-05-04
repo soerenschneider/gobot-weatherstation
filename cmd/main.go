@@ -52,10 +52,23 @@ func run(conf config.Config) {
 
 	var mqttAdaptor internal.WeatherBotMqttAdaptor
 	if conf.Host != "" {
+		log.Println("Building MQTT adaptor")
+
 		clientId := fmt.Sprintf("%s_%s", config.BotName, conf.Placement)
 		mq := mqtt.NewAdaptor(conf.MqttConfig.Host, clientId)
 		mq.SetAutoReconnect(true)
 		mq.SetQoS(1)
+
+		if conf.MqttConfig.UsesSslCerts() {
+			log.Println("Setting TLS client cert and key...")
+			mq.SetClientCert(conf.MqttConfig.ClientCertFile)
+			mq.SetClientKey(conf.MqttConfig.ClientKeyFile)
+
+			if len(conf.MqttConfig.ServerCaFile) > 0 {
+				log.Println("Setting server CA...")
+				mq.SetServerCert(conf.MqttConfig.ServerCaFile)
+			}
+		}
 
 		mqttAdaptor = mq
 	} else {

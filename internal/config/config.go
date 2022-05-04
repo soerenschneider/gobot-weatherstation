@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"regexp"
 	"strconv"
 	"strings"
 )
@@ -18,14 +17,6 @@ const (
 	defaultMetricConfig    = ":9192"
 )
 
-var (
-	// This regex is not a very strict check, we don't validate hostname or ip (v4, v6) addresses...
-	mqttHostRegex = regexp.MustCompile(`^\w{3,}://.{3,}:\d{2,5}$`)
-
-	// We don't care that technically it's allowed to start with a slash
-	mqttTopicRegex = regexp.MustCompile("^([\\w%]+)(/[\\w%]+)*$")
-)
-
 type Config struct {
 	Placement    string `json:"placement,omitempty"`
 	MetricConfig string `json:"metrics_addr,omitempty"`
@@ -33,11 +24,6 @@ type Config struct {
 	LogSensor    bool   `json:"log_sensor,omitempty"`
 	MqttConfig
 	SensorConfig
-}
-
-type MqttConfig struct {
-	Host  string `json:"mqtt_host,omitempty"`
-	Topic string `json:"mqtt_topic,omitempty"`
 }
 
 func DefaultConfig() Config {
@@ -82,8 +68,17 @@ func ConfigFromEnv() Config {
 		conf.MetricConfig = metricConfig
 	}
 
-	conf.SensorConfig.ConfigFromEnv()
+	clientKeyFile, err := fromEnv("SSL_CLIENT_KEY_FILE")
+	if err == nil {
+		conf.ClientKeyFile = clientKeyFile
+	}
 
+	clientCertFile, err := fromEnv("SSL_CLIENT_CERT_FILE")
+	if err == nil {
+		conf.ClientCertFile = clientCertFile
+	}
+
+	conf.SensorConfig.ConfigFromEnv()
 	return conf
 }
 
@@ -111,19 +106,11 @@ func (conf *Config) Validate() error {
 		return fmt.Errorf("invalid interval: mut not be greater than 300 but is %d", conf.IntervalSecs)
 	}
 
-	if err := matchTopic(conf.Topic); err != nil {
-		return errors.New("invalid mqtt topic provided")
-	}
-
-	if err := matchHost(conf.MqttConfig.Host); err != nil {
-		return err
-	}
-
 	if err := conf.SensorConfig.Validate(); err != nil {
 		return err
 	}
 
-	return nil
+	return conf.MqttConfig.Validate()
 }
 
 func (conf *Config) Print() {
@@ -133,26 +120,11 @@ func (conf *Config) Print() {
 	log.Printf("LogSensor=%t", conf.LogSensor)
 	log.Printf("MetricConfig=%s", conf.MetricConfig)
 	log.Printf("IntervalSecs=%d", conf.IntervalSecs)
-	log.Printf("Host=%s", conf.Host)
-	log.Printf("Topic=%s", conf.Topic)
 
 	conf.SensorConfig.Print()
+	conf.MqttConfig.Print()
 
 	log.Println("-----------------")
-}
-
-func matchTopic(topic string) error {
-	if !mqttTopicRegex.MatchString(topic) {
-		return fmt.Errorf("invalid topic format used")
-	}
-	return nil
-}
-
-func matchHost(host string) error {
-	if !mqttHostRegex.Match([]byte(host)) {
-		return fmt.Errorf("invalid host format used")
-	}
-	return nil
 }
 
 func computeEnvName(name string) string {
@@ -192,10 +164,4 @@ func fromEnvBool(name string) (bool, error) {
 		return false, err
 	}
 	return parsed, nil
-}
-
-func (conf *Config) FormatTopic() {
-	if strings.Contains(conf.Topic, "%s") {
-		conf.Topic = fmt.Sprintf(conf.Topic, conf.Placement)
-	}
 }

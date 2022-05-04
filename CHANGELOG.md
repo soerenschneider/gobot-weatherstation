@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.0](https://www.github.com/soerenschneider/gobot-bme280/compare/v1.5.3...v1.6.0) (2022-05-04)
+
+
+### Features
+
+* allow tls client cert auth ([fdaa11b](https://www.github.com/soerenschneider/gobot-bme280/commit/fdaa11b90fef802942f1d49134c60c03db350113))
+
 ### [1.5.3](https://www.github.com/soerenschneider/gobot-bme280/compare/v1.5.2...v1.5.3) (2021-11-02)
 
 

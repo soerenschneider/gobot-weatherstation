@@ -14,6 +14,7 @@ This project uses the [Gobot Framework](https://gobot.io/) in combination with a
 | GOBOT_BME280_PLACEMENT      | -                    | Location short name of this bot                |
 | GOBOT_BME280_GPIO_BUS       | 1                    | GPIO Bus to use                                |
 | GOBOT_BME280_GPIO_ADDRESS   | 0x76                 | GPIO Address to use                            |
+| GOBOT_BME280_DISABLE_MQTT   | false                | Disable MQTT completely                        |
 | GOBOT_BME280_MQTT_HOST      | -                    | Host of the MQTT broker, can be omitted        |
 | GOBOT_BME280_MQTT_TOPIC     |                      | Topic to publish messages into                 |
 | GOBOT_BME280_LOG_SENSOR     | false                | Log sensor readings                            |
@@ -28,6 +29,7 @@ This project uses the [Gobot Framework](https://gobot.io/) in combination with a
   "metrics_addr": ":1234",
   "gpio_bus": 15,
   "gpio_address": 16,
+  "disable_mqtt": false,
   "mqtt_host": "tcp://broker:1883",
   "mqtt_topic": "mytopic/%s",
   "log_sensor": true

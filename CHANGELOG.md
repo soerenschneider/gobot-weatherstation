@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.0](https://github.com/soerenschneider/gobot-bme280/compare/v1.6.0...v1.7.0) (2022-06-10)
+
+
+### Features
+
+* Switch to disable MQTT ([#22](https://github.com/soerenschneider/gobot-bme280/issues/22)) ([ea1a49a](https://github.com/soerenschneider/gobot-bme280/commit/ea1a49ac2f28991ece8c2ad46b0690dee2830ae3))
+
 ## [1.6.0](https://www.github.com/soerenschneider/gobot-bme280/compare/v1.5.3...v1.6.0) (2022-05-04)
 
 

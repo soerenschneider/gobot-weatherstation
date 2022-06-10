@@ -22,6 +22,7 @@ type Config struct {
 	MetricConfig string `json:"metrics_addr,omitempty"`
 	IntervalSecs int    `json:"interval_s,omitempty"`
 	LogSensor    bool   `json:"log_sensor,omitempty"`
+	DisableMqtt  bool   `json:"disable_mqtt"`
 	MqttConfig
 	SensorConfig
 }
@@ -51,6 +52,11 @@ func ConfigFromEnv() Config {
 	intervalSeconds, err := fromEnvInt("INTERVAL_S")
 	if err == nil {
 		conf.IntervalSecs = intervalSeconds
+	}
+
+	disableMqtt, err := fromEnvBool("DISABLE_MQTT")
+	if err == nil {
+		conf.DisableMqtt = disableMqtt
 	}
 
 	mqttHost, err := fromEnv("MQTT_HOST")
@@ -110,6 +116,10 @@ func (conf *Config) Validate() error {
 		return err
 	}
 
+	if conf.DisableMqtt {
+		return nil
+	}
+
 	return conf.MqttConfig.Validate()
 }
 
@@ -120,9 +130,12 @@ func (conf *Config) Print() {
 	log.Printf("LogSensor=%t", conf.LogSensor)
 	log.Printf("MetricConfig=%s", conf.MetricConfig)
 	log.Printf("IntervalSecs=%d", conf.IntervalSecs)
+	log.Printf("DisableMqtt=%t", conf.DisableMqtt)
 
 	conf.SensorConfig.Print()
-	conf.MqttConfig.Print()
+	if !conf.DisableMqtt {
+		conf.MqttConfig.Print()
+	}
 
 	log.Println("-----------------")
 }

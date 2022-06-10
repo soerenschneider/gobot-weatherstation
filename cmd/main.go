@@ -51,7 +51,7 @@ func run(conf config.Config) {
 	driver := i2c.NewBME280Driver(raspberry, i2c.WithBus(conf.GpioBus), i2c.WithAddress(conf.GpioAddress))
 
 	var mqttAdaptor internal.WeatherBotMqttAdaptor
-	if conf.Host != "" {
+	if !conf.DisableMqtt {
 		log.Println("Building MQTT adaptor")
 
 		clientId := fmt.Sprintf("%s_%s", config.BotName, conf.Placement)

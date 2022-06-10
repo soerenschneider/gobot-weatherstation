@@ -29,6 +29,10 @@ func (conf *MqttConfig) Validate() error {
 		return errors.New("invalid mqtt topic provided")
 	}
 
+	if len(conf.Host) == 0 {
+		return errors.New("empty host provided")
+	}
+
 	if err := matchHost(conf.Host); err != nil {
 		return err
 	}

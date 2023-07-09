@@ -37,18 +37,19 @@ func TestAssembleBot(t *testing.T) {
 
 	bot := AssembleBot(station)
 	go func() {
-		err := bot.Start()
-		if err != nil {
-			t.Fatal(err)
-		}
+		_ = bot.Start()
 	}()
 
 	// TODO: Come on, man, fix this
 	time.Sleep(5 * time.Second)
-	bot.Stop()
+	if err := bot.Stop(); err != nil {
+		t.Fatal(err)
+	}
 
 	m := &Measurement{}
-	json.Unmarshal(mqttAdaptor.Msg, m)
+	if err := json.Unmarshal(mqttAdaptor.Msg, m); err != nil {
+		t.Fatal(err)
+	}
 
 	if m.Pressure != MeasureDefaultsPressure {
 		t.Errorf("Expected %f, got %f", MeasureDefaultsPressure, m.Pressure)

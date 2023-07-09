@@ -3,13 +3,14 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/soerenschneider/gobot-bme280/internal"
-	"github.com/soerenschneider/gobot-bme280/internal/config"
-	"gobot.io/x/gobot/drivers/i2c"
-	"gobot.io/x/gobot/platforms/mqtt"
-	"gobot.io/x/gobot/platforms/raspi"
 	"log"
 	"os"
+
+	"github.com/soerenschneider/gobot-bme280/internal"
+	"github.com/soerenschneider/gobot-bme280/internal/config"
+	"gobot.io/x/gobot/v2/drivers/i2c"
+	"gobot.io/x/gobot/v2/platforms/mqtt"
+	"gobot.io/x/gobot/v2/platforms/raspi"
 )
 
 const (

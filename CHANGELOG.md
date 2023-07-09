@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.7.1](https://github.com/soerenschneider/gobot-bme280/compare/v1.7.0...v1.7.1) (2023-07-09)
+
+
+### Bug Fixes
+
+* fix field tags ([cb0af11](https://github.com/soerenschneider/gobot-bme280/commit/cb0af115721be1cc8f4765ace0ebd457e085ecdd))
+* fix regex ([2bc29c2](https://github.com/soerenschneider/gobot-bme280/commit/2bc29c2308d6c36998e79585c0c3cecde28d77a5))
+
 ## [1.7.0](https://github.com/soerenschneider/gobot-bme280/compare/v1.6.0...v1.7.0) (2022-06-10)
 
 

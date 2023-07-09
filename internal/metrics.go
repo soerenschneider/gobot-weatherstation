@@ -1,12 +1,14 @@
 package internal
 
 import (
+	"errors"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promauto"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/soerenschneider/gobot-bme280/internal/config"
 	"log"
 	"net/http"
+	"time"
 )
 
 const namespace = config.BotName
@@ -86,9 +88,17 @@ func metricFromMeasurement(m Measurement, placement string) {
 
 func StartMetricsServer(listenAddr string) {
 	log.Printf("Starting metrics listener at %s", listenAddr)
-	http.Handle("/metrics", promhttp.Handler())
-	err := http.ListenAndServe(listenAddr, nil)
-	if err != nil {
+	mux := http.NewServeMux()
+	mux.Handle("/metrics", promhttp.Handler())
+	server := http.Server{
+		Addr:              listenAddr,
+		ReadTimeout:       3 * time.Second,
+		ReadHeaderTimeout: 3 * time.Second,
+		WriteTimeout:      3 * time.Second,
+		IdleTimeout:       30 * time.Second,
+	}
+
+	if err := server.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
 		log.Fatalf("Could not start metrics listener: %v", err)
 	}
 }

@@ -3,7 +3,7 @@ package internal
 import (
 	"encoding/json"
 	"github.com/soerenschneider/gobot-bme280/internal/config"
-	"gobot.io/x/gobot"
+	"gobot.io/x/gobot/v2"
 	"log"
 	"testing"
 	"time"

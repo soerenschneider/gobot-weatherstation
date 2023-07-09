@@ -36,7 +36,12 @@ func TestAssembleBot(t *testing.T) {
 	}
 
 	bot := AssembleBot(station)
-	go bot.Start()
+	go func() {
+		err := bot.Start()
+		if err != nil {
+			t.Fatal(err)
+		}
+	}()
 
 	// TODO: Come on, man, fix this
 	time.Sleep(5 * time.Second)

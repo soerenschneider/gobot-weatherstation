@@ -1,9 +1,10 @@
 package internal
 
 import (
-	"github.com/soerenschneider/gobot-bme280/internal/config"
-	"gobot.io/x/gobot"
 	"time"
+
+	"github.com/soerenschneider/gobot-bme280/internal/config"
+	"gobot.io/x/gobot/v2"
 )
 
 type WeatherBotSensor interface {

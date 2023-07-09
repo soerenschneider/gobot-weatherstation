@@ -96,6 +96,7 @@ func StartMetricsServer(listenAddr string) {
 		ReadHeaderTimeout: 3 * time.Second,
 		WriteTimeout:      3 * time.Second,
 		IdleTimeout:       30 * time.Second,
+		Handler:           mux,
 	}
 
 	if err := server.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {

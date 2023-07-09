@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.2](https://github.com/soerenschneider/gobot-bme280/compare/v1.7.1...v1.7.2) (2023-07-09)
+
+
+### Bug Fixes
+
+* add missing handler ([1dffa27](https://github.com/soerenschneider/gobot-bme280/commit/1dffa272988053ade18b87ba5d7c3c68d7f0ee2e))
+
 ## [1.7.1](https://github.com/soerenschneider/gobot-bme280/compare/v1.7.0...v1.7.1) (2023-07-09)
 
 

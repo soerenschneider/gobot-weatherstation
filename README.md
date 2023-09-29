@@ -33,7 +33,7 @@ $ go install github.com/soerenschneider/gobot-bme280@latest
 
 gobot-bme280 can be fully configured using either environment variables or a config file. To supply a config file, the `-config` parameter is used.
 
-### Reference
+### General Config Reference
 | Struct Field      | Description                                  | Environment Variable              | Default Value   | Validation                               |
 |-------------------|----------------------------------------------|-----------------------------------|-----------------|------------------------------------------|
 | Placement         | Specifies the placement.                     | GOBOT_BME280_PLACEMENT            | N/A (required)  | required                                 |
@@ -42,6 +42,7 @@ gobot-bme280 can be fully configured using either environment variables or a con
 | StatIntervals     | Intervals for collecting statistics.         | GOBOT_BME280_STAT_INTERVALS       | N/A (dive)      | dive,min=10,max=3600                     |
 | LogSensor         | Whether to log sensor readings.              | GOBOT_BME280_LOG_SENSOR_READINGS  | false           | N/A                                      |
 
+### MQTT Config Reference
 | Struct Field      | Description                               | Environment Variable                  | Default Value                                 | Validation                              |
 |-------------------|-------------------------------------------|---------------------------------------|-----------------------------------------------|-----------------------------------------|
 | Disabled          | Indicates if MQTT is disabled.            | GOBOT_BME280_MQTT_DISABLED            | false                                         | N/A                                     |
@@ -51,6 +52,7 @@ gobot-bme280 can be fully configured using either environment variables or a con
 | ClientCertFile    | Client SSL certificate file for MQTT.     | GOBOT_BME280_MQTT_TLS_CLIENT_CRT_FILE | N/A (required_unless=ClientKeyFile '', file)  | required_unless=ClientKeyFile '', file  |
 | ServerCaFile      | Server SSL CA certificate file for MQTT.  | GOBOT_BME280_MQTT_TLS_SERVER_CA_FILE  | N/A (omitempty, file)                         | required_unless=ClientKeyFile '', file  |
 
+### Sensor Config Reference
 | Struct Field      | Description               | Environment Variable          | Default Value | Validation      |
 |-------------------|---------------------------|-------------------------------|---------------|-----------------|
 | GpioBus           | GPIO bus for sensor.      | GOBOT_BME280_GPIO_BUS         | 1             | gte=0           |

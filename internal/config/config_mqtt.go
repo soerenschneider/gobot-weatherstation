@@ -15,8 +15,9 @@ var (
 )
 
 type MqttConfig struct {
-	Host           string `json:"mqtt_host,omitempty" env:"MQTT_BROKER" validate:"required,mqtt_broker"`
-	Topic          string `json:"mqtt_topic,omitempty" env:"MQTT_TOPIC" validate:"required,mqtt_topic"`
+	Disabled       bool   `json:"disable_mqtt" env:"MQTT_DISABLED"`
+	Host           string `json:"mqtt_host,omitempty" env:"MQTT_BROKER" validate:"required_if=Disabled false,mqtt_broker"`
+	Topic          string `json:"mqtt_topic,omitempty" env:"MQTT_TOPIC" validate:"required_if=Disabled false,mqtt_topic"`
 	ClientKeyFile  string `json:"mqtt_ssl_key_file,omitempty" env:"MQTT_TLS_CLIENT_KEY_FILE" validate:"required_unless=ClientCertFile '',omitempty,file"`
 	ClientCertFile string `json:"mqtt_ssl_cert_file,omitempty" env:"MQTT_TLS_CLIENT_CRT_FILE" validate:"required_unless=ClientKeyFile '',omitempty,file"`
 	ServerCaFile   string `json:"mqtt_ssl_ca_file,omitempty" env:"MQTT_TLS_SERVER_CA_FILE" validate:"omitempty,file"`

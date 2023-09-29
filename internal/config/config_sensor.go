@@ -13,6 +13,6 @@ func defaultSensorConfig() SensorConfig {
 }
 
 type SensorConfig struct {
-	GpioBus     int `json:"gpio_bus,omitempty" validate:"gte=0"`
-	GpioAddress int `json:"gpio_address,omitempty" validate:"gte=1,lte=200"`
+	GpioBus     int `json:"gpio_bus,omitempty" env:"GPIO_BUS" validate:"gte=0"`
+	GpioAddress int `json:"gpio_address,omitempty" env:"GPIO_ADDRESS" validate:"gte=1,lte=200"`
 }

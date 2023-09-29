@@ -71,7 +71,7 @@ func TestConfig_Validate(t *testing.T) {
 			name: "all okay",
 			fields: fields{
 				placement:    "placement",
-				MetricConfig: ":9100",
+				MetricConfig: "0.0.0.0:9100",
 				FirmAtaPort:  "/dev/ttyUSB0",
 				GpioBus:      1,
 				GpioAddress:  75,
@@ -87,7 +87,7 @@ func TestConfig_Validate(t *testing.T) {
 		{
 			name: "missing loc",
 			fields: fields{
-				MetricConfig: ":9100",
+				MetricConfig: "0.0.0.0:9100",
 				FirmAtaPort:  "/dev/ttyUSB0",
 				GpioBus:      1,
 				GpioAddress:  75,
@@ -104,7 +104,7 @@ func TestConfig_Validate(t *testing.T) {
 			name: "invalid gpiobus",
 			fields: fields{
 				placement:    "loc",
-				MetricConfig: ":9100",
+				MetricConfig: "0.0.0.0:9100",
 				GpioBus:      -5,
 				GpioAddress:  75,
 				IntervalSecs: 30,
@@ -120,7 +120,7 @@ func TestConfig_Validate(t *testing.T) {
 			name: "missing host",
 			fields: fields{
 				placement:    "loc",
-				MetricConfig: ":9100",
+				MetricConfig: "0.0.0.0:9100",
 				FirmAtaPort:  "/dev/ttyUSB0",
 				GpioBus:      1,
 				GpioAddress:  75,

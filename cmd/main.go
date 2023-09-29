@@ -37,15 +37,14 @@ func main() {
 	}
 	config.PrintFields(conf)
 	log.Println("Validating config...")
-	err := config.Validate(conf)
-	if err != nil {
+	if err := config.Validate(conf); err != nil {
 		log.Fatalf("Could not validate config: %v", err)
 	}
 
 	run(conf)
 }
 
-func run(conf config.Config) {
+func run(conf *config.Config) {
 	if conf.MetricConfig != "" {
 		go internal.StartMetricsServer(conf.MetricConfig)
 	}
@@ -83,7 +82,7 @@ func run(conf config.Config) {
 		Driver:      driver,
 		Adaptor:     raspberry,
 		MqttAdaptor: mqttAdaptor,
-		Config:      conf,
+		Config:      *conf,
 	}
 
 	bot := internal.AssembleBot(adaptors)

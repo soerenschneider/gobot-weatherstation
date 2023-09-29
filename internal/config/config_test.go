@@ -1,141 +1,51 @@
 package config
 
 import (
-	"fmt"
-	"os"
 	"reflect"
-	"strings"
 	"testing"
 )
 
-func Test_fromEnvBool1(t *testing.T) {
-	key := "asdjnasdogsagsadgjsdgsdgasdgjsdg"
-	resultingKey := fmt.Sprintf("%s_%s", strings.ToUpper(BotName), strings.ToUpper(key))
-	os.Setenv(resultingKey, "true")
-	type args struct {
-		name string
-	}
-	tests := []struct {
-		name    string
-		args    args
-		want    bool
-		wantErr bool
-	}{
-		{
-			name: "default",
-			args: args{
-				name: "asdjfasdighasgasdgasdg",
-			},
-			want:    false,
-			wantErr: true,
-		},
-		{
-			name: "default",
-			args: args{
-				name: "asdjfasdighasgasdgasdg",
-			},
-			want:    false,
-			wantErr: true,
-		},
-		{
-			name: "test",
-			args: args{
-				name: key,
-			},
-			want:    true,
-			wantErr: false,
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			got, err := fromEnvBool(tt.args.name)
-			if (err != nil) != tt.wantErr {
-				t.Errorf("fromEnvBool() error = %v, wantErr %v", err, tt.wantErr)
-				return
-			}
-			if got != tt.want {
-				t.Errorf("fromEnvBool() got = %v, want %v", got, tt.want)
-			}
-		})
-	}
-}
-
 func Test_matchHost(t *testing.T) {
 	tests := []struct {
-		name    string
-		host    string
-		wantErr bool
+		name string
+		host string
+		want bool
 	}{
 		{
-			name:    "no tld",
-			host:    "tcp://hostname:1883",
-			wantErr: false,
+			name: "no tld",
+			host: "tcp://hostname:1883",
+			want: true,
 		},
 		{
-			name:    "tld",
-			host:    "tcp://hostname.my.tld:1883",
-			wantErr: false,
+			name: "tld",
+			host: "tcp://hostname.my.tld:1883",
+			want: true,
 		},
 		{
-			name:    "ip",
-			host:    "tcp://192.168.0.1:1883",
-			wantErr: false,
+			name: "ip",
+			host: "tcp://192.168.0.1:1883",
+			want: true,
 		},
 		{
-			name:    "no protocol",
-			host:    "192.168.0.1:1883",
-			wantErr: true,
+			name: "no protocol",
+			host: "192.168.0.1:1883",
+			want: false,
 		},
 		{
-			name:    "no port",
-			host:    "tcp://host",
-			wantErr: true,
+			name: "no port",
+			host: "tcp://host",
+			want: false,
 		},
 		{
-			name:    "only host",
-			host:    "host",
-			wantErr: true,
+			name: "only host",
+			host: "host",
+			want: false,
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if err := matchHost(tt.host); (err != nil) != tt.wantErr {
-				t.Errorf("matchHost() error = %v, wantErr %v", err, tt.wantErr)
-			}
-		})
-	}
-}
-
-func Test_fromEnvInt(t *testing.T) {
-	key := "akjsdfjasgasdkg"
-	resultingKey := fmt.Sprintf("%s_%s", strings.ToUpper(BotName), strings.ToUpper(key))
-	os.Setenv(resultingKey, "3141")
-
-	tests := []struct {
-		name    string
-		want    int
-		wantErr bool
-	}{
-		{
-			name:    key,
-			want:    3141,
-			wantErr: false,
-		},
-		{
-			name:    "bla",
-			want:    -1,
-			wantErr: true,
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			got, err := fromEnvInt(tt.name)
-			if (err != nil) != tt.wantErr {
-				t.Errorf("fromEnvInt() error = %v, wantErr %v", err, tt.wantErr)
-				return
-			}
-			if got != tt.want {
-				t.Errorf("fromEnvInt() got = %v, want %v", got, tt.want)
+			if got := matchHost(tt.host); got != tt.want {
+				t.Errorf("matchHost() error = %v, got %v", got, tt.want)
 			}
 		})
 	}
@@ -161,7 +71,7 @@ func TestConfig_Validate(t *testing.T) {
 			name: "all okay",
 			fields: fields{
 				placement:    "placement",
-				MetricConfig: ":9100",
+				MetricConfig: "0.0.0.0:9100",
 				FirmAtaPort:  "/dev/ttyUSB0",
 				GpioBus:      1,
 				GpioAddress:  75,
@@ -177,7 +87,7 @@ func TestConfig_Validate(t *testing.T) {
 		{
 			name: "missing loc",
 			fields: fields{
-				MetricConfig: ":9100",
+				MetricConfig: "0.0.0.0:9100",
 				FirmAtaPort:  "/dev/ttyUSB0",
 				GpioBus:      1,
 				GpioAddress:  75,
@@ -194,7 +104,7 @@ func TestConfig_Validate(t *testing.T) {
 			name: "invalid gpiobus",
 			fields: fields{
 				placement:    "loc",
-				MetricConfig: ":9100",
+				MetricConfig: "0.0.0.0:9100",
 				GpioBus:      -5,
 				GpioAddress:  75,
 				IntervalSecs: 30,
@@ -210,7 +120,7 @@ func TestConfig_Validate(t *testing.T) {
 			name: "missing host",
 			fields: fields{
 				placement:    "loc",
-				MetricConfig: ":9100",
+				MetricConfig: "0.0.0.0:9100",
 				FirmAtaPort:  "/dev/ttyUSB0",
 				GpioBus:      1,
 				GpioAddress:  75,
@@ -236,8 +146,8 @@ func TestConfig_Validate(t *testing.T) {
 				LogSensor:    tt.fields.LogValues,
 				MqttConfig:   tt.fields.MqttConfig,
 			}
-			if err := c.Validate(); (err != nil) != tt.wantErr {
-				t.Errorf("Validate() error = %v, wantErr %v", err, tt.wantErr)
+			if err := Validate(c); (err != nil) != tt.wantErr {
+				t.Errorf("Validate() error = %v, want %v", err, tt.wantErr)
 			}
 		})
 	}
@@ -278,13 +188,13 @@ func TestReadJsonConfig(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := ReadJsonConfig(tt.filePath)
+			got, err := Read(tt.filePath)
 			if (err != nil) != tt.wantErr {
-				t.Errorf("ReadJsonConfig() error = %v, wantErr %v", err, tt.wantErr)
+				t.Errorf("Read() error = %v, want %v", err, tt.wantErr)
 				return
 			}
 			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("ReadJsonConfig() got = %v, want %v", got, tt.want)
+				t.Errorf("Read() got = %v, want %v", got, tt.want)
 			}
 		})
 	}
@@ -292,39 +202,39 @@ func TestReadJsonConfig(t *testing.T) {
 
 func Test_matchTopic(t *testing.T) {
 	tests := []struct {
-		name    string
-		topic   string
-		wantErr bool
+		name  string
+		topic string
+		want  bool
 	}{
 		{
-			topic:   "topicname",
-			wantErr: false,
+			topic: "topicname",
+			want:  true,
 		},
 		{
-			topic:   "more/complicated",
-			wantErr: false,
+			topic: "more/complicated",
+			want:  true,
 		},
 		{
-			topic:   "more/complicated/topic",
-			wantErr: false,
+			topic: "more/complicated/topic",
+			want:  true,
 		},
 		{
-			topic:   "/leading",
-			wantErr: true,
+			topic: "/leading",
+			want:  false,
 		},
 		{
-			topic:   "trailing/",
-			wantErr: true,
+			topic: "trailing/",
+			want:  false,
 		},
 		{
-			topic:   "replace/%s",
-			wantErr: false,
+			topic: "replace/%s",
+			want:  true,
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if err := matchTopic(tt.topic); (err != nil) != tt.wantErr {
-				t.Errorf("matchTopic() error = %v, wantErr %v", err, tt.wantErr)
+			if got := matchTopic(tt.topic); got != tt.want {
+				t.Errorf("matchTopic() got = %t, want %t", got, tt.want)
 			}
 		})
 	}

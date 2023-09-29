@@ -31,18 +31,20 @@ func main() {
 	}
 
 	log.Printf("Started %s, version %s, commit %s", config.BotName, internal.BuildVersion, internal.CommitHash)
-	conf := loadConfig(configFile)
-	conf.Print()
-	log.Println("Validating config...")
-	err := conf.Validate()
+	conf, err := config.Read(configFile)
 	if err != nil {
+		log.Fatalf("could not read config: %v", err)
+	}
+	config.PrintFields(conf)
+	log.Println("Validating config...")
+	if err := config.Validate(conf); err != nil {
 		log.Fatalf("Could not validate config: %v", err)
 	}
 
 	run(conf)
 }
 
-func run(conf config.Config) {
+func run(conf *config.Config) {
 	if conf.MetricConfig != "" {
 		go internal.StartMetricsServer(conf.MetricConfig)
 	}
@@ -52,7 +54,7 @@ func run(conf config.Config) {
 	driver := i2c.NewBME280Driver(raspberry, i2c.WithBus(conf.GpioBus), i2c.WithAddress(conf.GpioAddress))
 
 	var mqttAdaptor internal.WeatherBotMqttAdaptor
-	if !conf.DisableMqtt {
+	if !conf.MqttConfig.Disabled {
 		log.Println("Building MQTT adaptor")
 
 		clientId := fmt.Sprintf("%s_%s", config.BotName, conf.Placement)
@@ -80,7 +82,7 @@ func run(conf config.Config) {
 		Driver:      driver,
 		Adaptor:     raspberry,
 		MqttAdaptor: mqttAdaptor,
-		Config:      conf,
+		Config:      *conf,
 	}
 
 	bot := internal.AssembleBot(adaptors)
@@ -88,21 +90,4 @@ func run(conf config.Config) {
 	if err != nil {
 		log.Fatalf("Could not start bot: %v", err)
 	}
-}
-
-func loadConfig(configFile string) config.Config {
-	if configFile == "" {
-		log.Println("Building config from env vars")
-		return config.ConfigFromEnv()
-	}
-
-	log.Printf("Reading config from file %s", configFile)
-	conf, err := config.ReadJsonConfig(configFile)
-	if err != nil {
-		log.Fatalf("Could not read config from %s: %v", configFile, err)
-	}
-	if nil == conf {
-		log.Fatalf("Received empty config, should not happen")
-	}
-	return *conf
 }

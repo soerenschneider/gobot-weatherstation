@@ -31,6 +31,30 @@ $ go install github.com/soerenschneider/gobot-bme280@latest
 
 ## Configuration
 
+gobot-bme280 can be fully configured using either environment variables or a config file. To supply a config file, the `-config` parameter is used.
+
+### Reference
+| Struct Field      | Description                                  | Environment Variable              | Default Value   | Validation                               |
+|-------------------|----------------------------------------------|-----------------------------------|-----------------|------------------------------------------|
+| Placement         | Specifies the placement.                     | GOBOT_BME280_PLACEMENT            | N/A (required)  | required                                 |
+| MetricConfig      | Metric server address.                       | GOBOT_BME280_METRICS_LISTEN_ADDR  | N/A (omitempty) | tcp_addr                                 |
+| IntervalSecs      | Interval in seconds for sensor readings.     | GOBOT_BME280_INTERVAL_S           | 30              | min=30,max=300                           |
+| StatIntervals     | Intervals for collecting statistics.         | GOBOT_BME280_STAT_INTERVALS       | N/A (dive)      | dive,min=10,max=3600                     |
+| LogSensor         | Whether to log sensor readings.              | GOBOT_BME280_LOG_SENSOR_READINGS  | false           | N/A                                      |
+
+| Struct Field      | Description                               | Environment Variable                  | Default Value                                 | Validation                              |
+|-------------------|-------------------------------------------|---------------------------------------|-----------------------------------------------|-----------------------------------------|
+| Disabled          | Indicates if MQTT is disabled.            | GOBOT_BME280_MQTT_DISABLED            | false                                         | N/A                                     |
+| Host              | MQTT broker host address.                 | GOBOT_BME280_MQTT_BROKER              | N/A (required_if=Disabled false, mqtt_broker) | required_if=Disabled false, mqtt_broker |
+| Topic             | MQTT topic for sensor readings.           | GOBOT_BME280_MQTT_TOPIC               | N/A (required_if=Disabled false, mqtt_topic)  | required_if=Disabled false, mqtt_topic  |
+| ClientKeyFile     | Client SSL key file for MQTT.             | GOBOT_BME280_MQTT_TLS_CLIENT_KEY_FILE | N/A (required_unless=ClientCertFile '', file) | required_unless=ClientCertFile '', file |
+| ClientCertFile    | Client SSL certificate file for MQTT.     | GOBOT_BME280_MQTT_TLS_CLIENT_CRT_FILE | N/A (required_unless=ClientKeyFile '', file)  | required_unless=ClientKeyFile '', file  |
+| ServerCaFile      | Server SSL CA certificate file for MQTT.  | GOBOT_BME280_MQTT_TLS_SERVER_CA_FILE  | N/A (omitempty, file)                         | required_unless=ClientKeyFile '', file  |
+
+| Struct Field      | Description               | Environment Variable          | Default Value | Validation      |
+|-------------------|---------------------------|-------------------------------|---------------|-----------------|
+| GpioBus           | GPIO bus for sensor.      | GOBOT_BME280_GPIO_BUS         | 1             | gte=0           |
+| GpioAddress       | GPIO address for sensor.  | GOBOT_BME280_GPIO_ADDRESS     | 0x76          | gte=1,lte=200   |
 
 
 ## Metrics

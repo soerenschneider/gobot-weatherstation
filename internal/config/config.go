@@ -17,7 +17,7 @@ const (
 	BotName                = "gobot_bme280"
 	defaultLogSensor       = false
 	defaultIntervalSeconds = 30
-	defaultMetricConfig    = ":9192"
+	defaultMetricConfig    = "0.0.0.0:9192"
 )
 
 var (
@@ -26,8 +26,8 @@ var (
 )
 
 type Config struct {
-	Placement    string `json:"placement,omitempty"`
-	MetricConfig string `json:"metrics_addr,omitempty"`
+	Placement    string `json:"placement,omitempty" validate:"required"`
+	MetricConfig string `json:"metrics_addr,omitempty" validate:"omitempty,tcp_addr"`
 	IntervalSecs int    `json:"interval_s,omitempty" validate:"gte=30,lte=300"`
 	LogSensor    bool   `json:"log_sensor,omitempty"`
 	DisableMqtt  bool   `json:"disable_mqtt"`

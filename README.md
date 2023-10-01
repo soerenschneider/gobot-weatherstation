@@ -9,7 +9,7 @@ Detects and forwards temperature data using a [BME280 sensor](https://gobot.io/d
 ## Features
 
 🤖 Integrates with Home-Assistant<br/>
-📊 Calculates statistics about read temperature data over time windows, accessible via MQTT and metrics<br/>
+📊 Reads sensor data, accessible via MQTT and metrics<br/>
 🔐 Allows connecting to secure MQTT brokers using TLS client certificates<br/>
 🔭 Expose temperature data as metrics to enable alerting and Grafana dashboards<br/>
 

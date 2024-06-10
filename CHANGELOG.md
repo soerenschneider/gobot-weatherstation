@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.7.3](https://github.com/soerenschneider/gobot-bme280/compare/v1.7.2...v1.7.3) (2024-06-10)
+
+
+### Bug Fixes
+
+* **deps:** bump github.com/go-playground/validator/v10 ([#43](https://github.com/soerenschneider/gobot-bme280/issues/43)) ([b639bf0](https://github.com/soerenschneider/gobot-bme280/commit/b639bf051b103b60263ee423df1a941d038d6c77))
+* **deps:** bump github.com/prometheus/client_golang ([#41](https://github.com/soerenschneider/gobot-bme280/issues/41)) ([baa8ac1](https://github.com/soerenschneider/gobot-bme280/commit/baa8ac1fa90275573efa73357cbe68120b5b05af))
+
 ## [1.7.2](https://github.com/soerenschneider/gobot-bme280/compare/v1.7.1...v1.7.2) (2023-07-09)
 
 
